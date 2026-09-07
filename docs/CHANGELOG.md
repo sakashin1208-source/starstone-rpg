@@ -14,3 +14,13 @@
 - 汎用インタラクションコンポーネント (`interactable.gd`) およびNPCシーン (`npc.tscn`) 実装
 - 会話ウィンドウUI (`dialogue_box.tscn`, `dialogue_box.gd`) および会話データJSON作成
 - 全スクリプトのCLIパースチェックおよび村シーンのCLI実行検証 (Exit Code 0)
+
+## [0.3.0-game-loop] - 2026-09-07
+- Phase 3 Game Loop実装完了
+- クエスト管理サービス (`quest_manager.gd`) をAutoload登録し、HUD表示 (`quest_hud.tscn`) を追加
+- 双方向マップ移動トリガー (`map_teleporter.gd`) を作成し、村と森を接続
+- ささやきの森マップ (`forest.tscn`) 構築（深緑の草地、樹木群、古代の祠）
+- スライム敵エンティティ (`slime.tscn`) およびターン制コマンドバトル画面 (`battle_scene.tscn`, `battle_system.gd`) 実装（攻撃/スキル/道具/防御）
+- 宝箱ギミック (`treasure_chest.tscn`) 実装（開錠アニメーション、星石のかけら入手、クエスト進捗連動）
+- 長老NPCのクエスト進行連動ダイアログ分岐（未受注 → 探索中 → 報告達成 → 完了後）実装
+- 全スクリプト（11本）および全シーン（村・森・戦闘）のCLI検証完了 (Exit Code 0)

@@ -17,9 +17,16 @@
 - [x] STEP 10: Dialogue System (CanvasLayer DialogueBox UI, JSON data loading, page advance)
 - [x] Phase 2 Checkpoint & Hard Stop Report
 
-## PHASE 3: Game Loop (Next)
-- [ ] STEP 11: Quest System & Elder Quest Acceptance
-- [ ] STEP 12: Forest Map & Transition
-- [ ] STEP 13: Enemy Encounter & Turn-based Battle
-- [ ] STEP 14: Victory & Treasure Chest
-- [ ] STEP 15: Return to Village & Quest Completion
+## PHASE 3: Game Loop [DONE]
+- [x] STEP 11: Quest System & Elder Quest (QuestManager Autoload, QuestHUD UI)
+- [x] STEP 12: Forest Map & Scene Transition (`forest.tscn`, `map_teleporter.gd`)
+- [x] STEP 13: Enemy Encounter & Turn-based Battle (`slime.tscn`, `battle_scene.tscn`, `battle_system.gd`)
+- [x] STEP 14: Treasure Chest (`treasure_chest.tscn`, Starstone Shard drop)
+- [x] STEP 15: Return to Village & Quest Completion (Elder dialogue branching & complete loop)
+- [x] Phase 3 Checkpoint & Hard Stop Report
+
+## PHASE 4: Persistence (Next)
+- [ ] STEP 16: Inventory & Item Management
+- [ ] STEP 17: Save & Load System (`SaveService`)
+- [ ] STEP 18: Title Screen & State Restoration
+- [ ] Phase 4 Checkpoint & Hard Stop Report
