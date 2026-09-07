@@ -1,0 +1,32 @@
+# Godot 4.x specific ignores
+.godot/
+*.translation
+
+# Godot-specific exports/binaries
+export_presets.cfg
+build/
+
+# Blender backup and auto-save files
+*.blend1
+*.blend2
+*.blend@
+*.blend@@
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.venv/
+venv/
+
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# General temporary files
+*.tmp
+*.log
+.env
