@@ -1,0 +1,186 @@
+[gd_scene load_steps=22 format=3 uid="uid://d4k8y1m7e2x9q"]
+
+[ext_resource type="PackedScene" uid="uid://c5k0y0h3e2f1g" path="res://scenes/characters/player.tscn" id="1_player_scene"]
+[ext_resource type="Script" path="res://scripts/system/diorama_camera.gd" id="2_camera_script"]
+[ext_resource type="PackedScene" uid="uid://d3y7x2k5m9p1s" path="res://scenes/enemies/slime.tscn" id="3_slime_scene"]
+[ext_resource type="PackedScene" uid="uid://b6v4x1k9m2p7r" path="res://scenes/props/treasure_chest.tscn" id="4_chest_scene"]
+[ext_resource type="Script" path="res://scripts/system/map_teleporter.gd" id="5_teleport_script"]
+[ext_resource type="PackedScene" uid="uid://c7t4m9b1y5v3e" path="res://scenes/ui/dialogue_box.tscn" id="6_dialogue_scene"]
+[ext_resource type="PackedScene" uid="uid://c8x1k4m7y9p2q" path="res://scenes/ui/quest_hud.tscn" id="7_hud_scene"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_forest"]
+sky_top_color = Color(0.2, 0.45, 0.4, 1)
+sky_horizon_color = Color(0.7, 0.8, 0.72, 1)
+ground_bottom_color = Color(0.12, 0.18, 0.12, 1)
+ground_horizon_color = Color(0.7, 0.8, 0.72, 1)
+
+[sub_resource type="Sky" id="Sky_forest"]
+sky_material = SubResource("ProceduralSkyMaterial_forest")
+
+[sub_resource type="Environment" id="Environment_forest"]
+background_mode = 2
+sky = SubResource("Sky_forest")
+ambient_light_source = 3
+ambient_light_color = Color(0.8, 0.9, 0.85, 1)
+ambient_light_energy = 0.65
+tonemap_mode = 2
+fog_enabled = true
+fog_light_color = Color(0.65, 0.75, 0.7, 1)
+fog_density = 0.015
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ground"]
+size = Vector3(50, 0.5, 50)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_forest_ground"]
+albedo_color = Color(0.2, 0.35, 0.18, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_forest_ground"]
+material = SubResource("StandardMaterial3D_forest_ground")
+size = Vector3(50, 0.5, 50)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_stone"]
+albedo_color = Color(0.5, 0.52, 0.48, 1)
+roughness = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_shrine_base"]
+material = SubResource("StandardMaterial3D_stone")
+size = Vector3(4, 0.6, 4)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_shrine_pillar"]
+material = SubResource("StandardMaterial3D_stone")
+top_radius = 0.25
+bottom_radius = 0.3
+height = 2.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_trunk"]
+albedo_color = Color(0.35, 0.24, 0.15, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_trunk"]
+material = SubResource("StandardMaterial3D_trunk")
+top_radius = 0.3
+bottom_radius = 0.4
+height = 2.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pine"]
+albedo_color = Color(0.15, 0.36, 0.18, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_pine"]
+material = SubResource("StandardMaterial3D_pine")
+top_radius = 0.0
+bottom_radius = 1.6
+height = 3.2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_exit"]
+size = Vector3(8, 2, 2)
+
+[node name="Forest" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_forest")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.353553, 0.353553, 0, 0.707107, 0.707107, -0.5, -0.612372, 0.612372, 12, 18, 12)
+light_color = Color(0.95, 0.98, 0.9, 1)
+light_energy = 1.1
+shadow_enabled = true
+
+[node name="DioramaCamera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.798636, 0.601815, 0, -0.601815, 0.798636, 0, 7.5, 9)
+current = true
+fov = 42.0
+script = ExtResource("2_camera_script")
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_ground")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("BoxMesh_forest_ground")
+
+[node name="Shrine" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -12)
+
+[node name="Base" type="MeshInstance3D" parent="Shrine"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+mesh = SubResource("BoxMesh_shrine_base")
+
+[node name="PillarL" type="MeshInstance3D" parent="Shrine"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 1.5, 0)
+mesh = SubResource("CylinderMesh_shrine_pillar")
+
+[node name="PillarR" type="MeshInstance3D" parent="Shrine"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 1.5, 0)
+mesh = SubResource("CylinderMesh_shrine_pillar")
+
+[node name="TreasureChest" parent="Shrine" instance=ExtResource("4_chest_scene")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+
+[node name="SlimeEnemy" parent="." instance=ExtResource("3_slime_scene")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
+
+[node name="Trees" type="Node3D" parent="."]
+
+[node name="Tree1" type="Node3D" parent="Trees"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -2)
+
+[node name="Trunk" type="MeshInstance3D" parent="Trees/Tree1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+mesh = SubResource("CylinderMesh_trunk")
+
+[node name="Leaves" type="MeshInstance3D" parent="Trees/Tree1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.7, 0)
+mesh = SubResource("CylinderMesh_pine")
+
+[node name="Tree2" type="Node3D" parent="Trees"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -3)
+
+[node name="Trunk" type="MeshInstance3D" parent="Trees/Tree2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+mesh = SubResource("CylinderMesh_trunk")
+
+[node name="Leaves" type="MeshInstance3D" parent="Trees/Tree2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.7, 0)
+mesh = SubResource("CylinderMesh_pine")
+
+[node name="Tree3" type="Node3D" parent="Trees"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -9)
+
+[node name="Trunk" type="MeshInstance3D" parent="Trees/Tree3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+mesh = SubResource("CylinderMesh_trunk")
+
+[node name="Leaves" type="MeshInstance3D" parent="Trees/Tree3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.7, 0)
+mesh = SubResource("CylinderMesh_pine")
+
+[node name="Tree4" type="Node3D" parent="Trees"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -9)
+
+[node name="Trunk" type="MeshInstance3D" parent="Trees/Tree4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+mesh = SubResource("CylinderMesh_trunk")
+
+[node name="Leaves" type="MeshInstance3D" parent="Trees/Tree4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.7, 0)
+mesh = SubResource("CylinderMesh_pine")
+
+[node name="VillageExit" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 14)
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("5_teleport_script")
+target_scene_path = "res://scenes/maps/village.tscn"
+prompt_text = "[E] 村へ戻る"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VillageExit"]
+shape = SubResource("BoxShape3D_exit")
+
+[node name="Player" parent="." instance=ExtResource("1_player_scene")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+
+[node name="DialogueBox" parent="." instance=ExtResource("6_dialogue_scene")]
+
+[node name="QuestHUD" parent="." instance=ExtResource("7_hud_scene")]

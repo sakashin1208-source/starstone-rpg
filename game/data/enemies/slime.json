@@ -1,0 +1,10 @@
+{
+  "id": "enemy_slime",
+  "name": "フォレストスライム",
+  "hp": 25,
+  "max_hp": 25,
+  "attack": 6,
+  "defense": 2,
+  "exp": 20,
+  "gold": 15
+}

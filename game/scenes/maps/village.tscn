@@ -1,9 +1,11 @@
-[gd_scene load_steps=24 format=3 uid="uid://b0h6y1m3e5x8p"]
+[gd_scene load_steps=27 format=3 uid="uid://b0h6y1m3e5x8p"]
 
 [ext_resource type="PackedScene" uid="uid://c5k0y0h3e2f1g" path="res://scenes/characters/player.tscn" id="1_player_scene"]
 [ext_resource type="Script" path="res://scripts/system/diorama_camera.gd" id="2_camera_script"]
 [ext_resource type="PackedScene" uid="uid://b2v8m4x7e9q1a" path="res://scenes/characters/npc.tscn" id="3_npc_scene"]
 [ext_resource type="PackedScene" uid="uid://c7t4m9b1y5v3e" path="res://scenes/ui/dialogue_box.tscn" id="4_dialogue_scene"]
+[ext_resource type="PackedScene" uid="uid://c8x1k4m7y9p2q" path="res://scenes/ui/quest_hud.tscn" id="5_hud_scene"]
+[ext_resource type="Script" path="res://scripts/system/map_teleporter.gd" id="6_teleport_script"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sky"]
 sky_top_color = Color(0.42, 0.58, 0.82, 1)
@@ -89,6 +91,9 @@ roughness = 0.8
 material = SubResource("StandardMaterial3D_leaves")
 radius = 1.4
 height = 2.4
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_exit"]
+size = Vector3(6, 2, 2)
 
 [node name="Village" type="Node3D"]
 
@@ -202,6 +207,17 @@ light_color = Color(1, 0.82, 0.55, 1)
 light_energy = 1.5
 omni_range = 6.0
 
+[node name="ForestExit" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -16)
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("6_teleport_script")
+target_scene_path = "res://scenes/maps/forest.tscn"
+prompt_text = "[E] ささやきの森へ行く"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ForestExit"]
+shape = SubResource("BoxShape3D_exit")
+
 [node name="Player" parent="." instance=ExtResource("1_player_scene")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
@@ -216,3 +232,5 @@ npc_name = "村の少女"
 dialogue_file_path = "res://data/dialogues/villager_talk.json"
 
 [node name="DialogueBox" parent="." instance=ExtResource("4_dialogue_scene")]
+
+[node name="QuestHUD" parent="." instance=ExtResource("5_hud_scene")]

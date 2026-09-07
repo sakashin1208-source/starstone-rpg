@@ -1,0 +1,14 @@
+{
+  "id": "quest_001",
+  "title": "ささやきの森の調査",
+  "description": "北のささやきの森を調査し、奥の祠にある宝箱を調べる。",
+  "objectives": {
+    "in_progress": "ささやきの森の奥を調査する",
+    "ready_to_report": "村の長老に報告する",
+    "completed": "調査完了！"
+  },
+  "rewards": {
+    "exp": 50,
+    "gold": 100
+  }
+}
