@@ -4,7 +4,6 @@ extends StaticBody3D
 @export var item_name: String = "星石のかけら"
 @export var is_opened: bool = false
 
-@onready var lid: Node3D = $Lid
 @onready var interactable: Interactable = $Interactable
 
 func _ready() -> void:
@@ -22,8 +21,15 @@ func _on_interacted(_interactor: Node3D) -> void:
 
 func open_chest() -> void:
 	is_opened = true
-	if lid:
-		lid.rotation_degrees.x = -60.0 # Open lid
+	
+	# Visual open feedback (rotation or scale pop)
+	if has_node("Lid"):
+		get_node("Lid").rotation_degrees.x = -60.0
+	elif has_node("ChestModel"):
+		var model = get_node("ChestModel")
+		var tween = create_tween()
+		tween.tween_property(model, "scale", Vector3(1.15, 1.15, 1.15), 0.15)
+		tween.tween_property(model, "scale", Vector3(1.0, 1.0, 1.0), 0.15)
 	
 	var qm = _get_quest_manager()
 	if qm and qm.has_method("mark_ready_to_report"):
@@ -38,7 +44,7 @@ func open_chest() -> void:
 		])
 
 func _get_quest_manager() -> Node:
-	if has_node("/root/QuestManager"):
+	if is_inside_tree() and has_node("/root/QuestManager"):
 		return get_node("/root/QuestManager")
 	var nodes = get_tree().get_nodes_in_group("quest_manager")
 	return nodes[0] if nodes.size() > 0 else null
