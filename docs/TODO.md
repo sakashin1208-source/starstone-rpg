@@ -32,8 +32,14 @@
 - [x] E2E Save/Load Persistence Automated Test (`test_save_load.gd` - PASSED with 0 errors)
 - [x] Phase 4 Checkpoint & Hard Stop Report
 
-## PHASE 5: Vertical Slice QA & Polish (Next)
+## PHASE 5: Craftsman Atelier Interior [DONE]
+- [x] Blender 4.2 Python パイプラインで工房専用3Dアセット7種量産 (`generate_atelier_assets.py`)
+- [x] 工房内装シーン (`atelier.tscn`) 構築（作業台、彫刻狐、和紙提灯、棚、籠、職人の少女エマ）
+- [x] 村 (`village.tscn`) と工房 (`atelier.tscn`) の双方向移動テレポート扉設置
+- [x] 職人の少女エマの会話分岐（通常／星石のかけら所持時）実装
+- [x] 工房シーン自動検証テスト (`test_atelier_scene.gd` - PASSED with 0 errors)
+
+## PHASE 6: Vertical Slice QA & Polish (Next)
 - [ ] End-to-End Playable Loop Confirmation (GUI Run)
-- [ ] Blender Python Pipeline Integration (Procedural 3D Asset generation)
 - [ ] Figma UI Specifications & Design Token Mapping
 - [ ] HyperFrames Promotion Video Pipeline

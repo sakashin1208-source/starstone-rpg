@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.6.0-craftsman-atelier] - 2026-09-07
+- 人形師・職人の工房（Atelier）の内装シーン (`atelier.tscn`) を完全新規実装
+  - ユーザー提示のイメージ（温かみのある木製作業台、彫刻狐、和紙提灯照明、陶器棚、布籠、職人の少女）を反映
+- Blender 4.2 Python 自動化パイプライン (`generate_atelier_assets.py`) による工房専用3Dアセット7種類を量産・配置:
+  - `paper_lantern` (和紙提灯・温白色点光源3灯)
+  - `wooden_stool` (丸型木製作業スツール2脚)
+  - `workbench` (分厚い木製作業台・工具散乱テクスチャ)
+  - `pottery_shelf` (4段木製棚・陶器壺・小瓶)
+  - `cloth_basket` (編み込みバスケット・布ロール)
+  - `carved_fox` (作業台上の木彫り狐の人形)
+  - `craftsman_doll` (職人の少女エマ・エプロン・ツールポーチ・リボン)
+- シルヴァ村 (`village.tscn`) と人形工房 (`atelier.tscn`) を双方向テレポート扉で接続
+- 職人の少女エマ NPC のダイアログ分岐システム実装:
+  - 星石のかけら未所持時: 日常会話 (`craftsman_talk.json`)
+  - 星石のかけら所持時: 特別台詞 (`craftsman_starstone.json`)
+- 工房シーンおよびエマ会話分岐の自動検証テスト (`test_atelier_scene.gd`) を新規作成し、CLI自動検証で合格（Exit Code 0）を確認
+
 ## [0.1.0-bootstrap] - 2026-09-07
 - Phase 1 Bootstrap完了
 - ディレクトリ構造スケルトン構築

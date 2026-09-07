@@ -10,21 +10,34 @@ func _ready() -> void:
 	if interactable:
 		interactable.interacted.connect(_on_interacted)
 
-func _on_interacted(interactor: Node3D) -> void:
+func get_current_dialogue_path() -> String:
 	var qm = _get_quest_manager()
-	var current_dialogue_path = dialogue_file_path
+	var path = dialogue_file_path
 	
-	# Quest-specific branch for Elder
 	if npc_name == "村の長老" and qm:
 		var state = qm.current_state
 		if state == QuestManager.QuestState.NOT_STARTED:
-			current_dialogue_path = "res://data/dialogues/elder_intro.json"
+			path = "res://data/dialogues/elder_intro.json"
 		elif state == QuestManager.QuestState.IN_PROGRESS:
-			current_dialogue_path = "res://data/dialogues/elder_in_progress.json"
+			path = "res://data/dialogues/elder_in_progress.json"
 		elif state == QuestManager.QuestState.READY_TO_REPORT:
-			current_dialogue_path = "res://data/dialogues/elder_complete.json"
+			path = "res://data/dialogues/elder_complete.json"
 		elif state == QuestManager.QuestState.COMPLETED:
-			current_dialogue_path = "res://data/dialogues/elder_after.json"
+			path = "res://data/dialogues/elder_after.json"
+	elif npc_name == "職人の少女エマ" and qm:
+		if qm.has_starstone_shard:
+			path = "res://data/dialogues/craftsman_starstone.json"
+		else:
+			path = "res://data/dialogues/craftsman_talk.json"
+	
+	return path
+
+func _on_interacted(interactor: Node3D) -> void:
+	var qm = _get_quest_manager()
+	var current_dialogue_path = get_current_dialogue_path()
+
+	if not is_inside_tree() or not get_tree():
+		return
 
 	var dialogue_boxes = get_tree().get_nodes_in_group("dialogue_box")
 	if dialogue_boxes.size() > 0:
@@ -54,7 +67,9 @@ func _on_elder_dialogue_ended() -> void:
 		qm.complete_quest()
 
 func _get_quest_manager() -> Node:
-	if has_node("/root/QuestManager"):
+	if is_inside_tree() and has_node("/root/QuestManager"):
 		return get_node("/root/QuestManager")
-	var nodes = get_tree().get_nodes_in_group("quest_manager")
-	return nodes[0] if nodes.size() > 0 else null
+	if is_inside_tree() and get_tree():
+		var nodes = get_tree().get_nodes_in_group("quest_manager")
+		return nodes[0] if nodes.size() > 0 else null
+	return null

@@ -1,0 +1,184 @@
+[gd_scene load_steps=22 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/characters/player.tscn" id="1_player_scene"]
+[ext_resource type="Script" path="res://scripts/system/diorama_camera.gd" id="2_camera_script"]
+[ext_resource type="Script" path="res://scripts/dialogue/npc.gd" id="3_npc_script"]
+[ext_resource type="Script" path="res://scripts/dialogue/interactable.gd" id="4_interactable_script"]
+[ext_resource type="PackedScene" path="res://scenes/ui/dialogue_box.tscn" id="5_dialogue_scene"]
+[ext_resource type="PackedScene" path="res://scenes/ui/quest_hud.tscn" id="6_hud_scene"]
+[ext_resource type="Script" path="res://scripts/system/map_teleporter.gd" id="7_teleport_script"]
+[ext_resource type="PackedScene" path="res://assets/models/workbench.glb" id="8_workbench_model"]
+[ext_resource type="PackedScene" path="res://assets/models/wooden_stool.glb" id="9_stool_model"]
+[ext_resource type="PackedScene" path="res://assets/models/pottery_shelf.glb" id="10_shelf_model"]
+[ext_resource type="PackedScene" path="res://assets/models/cloth_basket.glb" id="11_basket_model"]
+[ext_resource type="PackedScene" path="res://assets/models/paper_lantern.glb" id="12_lantern_model"]
+[ext_resource type="PackedScene" path="res://assets/models/carved_fox.glb" id="13_fox_model"]
+[ext_resource type="PackedScene" path="res://assets/models/craftsman_doll.glb" id="14_emma_model"]
+
+[sub_resource type="Environment" id="Environment_atelier"]
+background_mode = 1
+background_color = Color(0.12, 0.09, 0.07, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.35, 0.28, 0.22, 1)
+ambient_light_energy = 0.8
+tonemap_mode = 2
+glow_enabled = true
+glow_bloom = 0.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_floor"]
+albedo_color = Color(0.38, 0.24, 0.14, 1)
+roughness = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_floor"]
+material = SubResource("StandardMaterial3D_floor")
+size = Vector3(10, 0.3, 8)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wall"]
+albedo_color = Color(0.82, 0.76, 0.68, 1)
+roughness = 0.85
+
+[sub_resource type="BoxMesh" id="BoxMesh_wall_back"]
+material = SubResource("StandardMaterial3D_wall")
+size = Vector3(10, 4, 0.3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wall_side"]
+material = SubResource("StandardMaterial3D_wall")
+size = Vector3(0.3, 4, 8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_floor"]
+size = Vector3(10, 0.3, 8)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_interact"]
+height = 1.5
+radius = 1.8
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_door"]
+size = Vector3(2.5, 2.5, 1.5)
+
+[node name="Atelier" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_atelier")
+
+[node name="WindowSunlight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707107, -0.353553, 0.612372, 0, 0.866025, 0.5, -0.707107, -0.353553, 0.612372, 4, 3, -1)
+light_color = Color(1, 0.88, 0.72, 1)
+light_energy = 0.9
+shadow_enabled = true
+
+[node name="DioramaCamera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 5.0, 6.5)
+current = true
+fov = 38.0
+script = ExtResource("2_camera_script")
+offset = Vector3(0, 5.0, 6.5)
+
+[node name="RoomGeometry" type="StaticBody3D" parent="."]
+
+[node name="Floor" type="MeshInstance3D" parent="RoomGeometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15, 0)
+mesh = SubResource("BoxMesh_floor")
+
+[node name="CollisionFloor" type="CollisionShape3D" parent="RoomGeometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15, 0)
+shape = SubResource("BoxShape3D_floor")
+
+[node name="WallBack" type="MeshInstance3D" parent="RoomGeometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.85, -3.85)
+mesh = SubResource("BoxMesh_wall_back")
+
+[node name="WallLeft" type="MeshInstance3D" parent="RoomGeometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.85, 1.85, 0)
+mesh = SubResource("BoxMesh_wall_side")
+
+[node name="WallRight" type="MeshInstance3D" parent="RoomGeometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.85, 1.85, 0)
+mesh = SubResource("BoxMesh_wall_side")
+
+[node name="PaperLanterns" type="Node3D" parent="."]
+
+[node name="LanternCenter" parent="PaperLanterns" instance=ExtResource("12_lantern_model")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.7, -1.2)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="PaperLanterns/LanternCenter"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+light_color = Color(1, 0.85, 0.55, 1)
+light_energy = 2.2
+shadow_enabled = true
+omni_range = 5.5
+
+[node name="LanternLeft" parent="PaperLanterns" instance=ExtResource("12_lantern_model")]
+transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, -2.4, 2.6, -1.5)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="PaperLanterns/LanternLeft"]
+light_color = Color(1, 0.82, 0.5, 1)
+light_energy = 1.8
+omni_range = 4.5
+
+[node name="LanternRight" parent="PaperLanterns" instance=ExtResource("12_lantern_model")]
+transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 2.4, 2.6, -1.5)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="PaperLanterns/LanternRight"]
+light_color = Color(1, 0.82, 0.5, 1)
+light_energy = 1.8
+omni_range = 4.5
+
+[node name="Furniture" type="Node3D" parent="."]
+
+[node name="Workbench" parent="Furniture" instance=ExtResource("8_workbench_model")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.2)
+
+[node name="CarvedFox" parent="Furniture" instance=ExtResource("13_fox_model")]
+transform = Transform3D(0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, 0.15, 0.9, -2.1)
+
+[node name="Stool1" parent="Furniture" instance=ExtResource("9_stool_model")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, 0, -1.3)
+
+[node name="Stool2" parent="Furniture" instance=ExtResource("9_stool_model")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 0, -1.3)
+
+[node name="PotteryShelfLeft" parent="Furniture" instance=ExtResource("10_shelf_model")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.4, 0, -3.6)
+
+[node name="ClothBasketRight" parent="Furniture" instance=ExtResource("11_basket_model")]
+transform = Transform3D(0.939693, 0, 0.34202, 0, 1, 0, -0.34202, 0, 0.939693, 3.2, 0, -3.0)
+
+[node name="EmmaNPC" type="CharacterBody3D" parent="."]
+transform = Transform3D(0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, 0.965926, 0.8, 0, -2.0)
+collision_layer = 1
+collision_mask = 1
+script = ExtResource("3_npc_script")
+npc_name = "職人の少女エマ"
+dialogue_file_path = "res://data/dialogues/craftsman_talk.json"
+
+[node name="Visual" type="Node3D" parent="EmmaNPC"]
+
+[node name="EmmaModel" parent="EmmaNPC/Visual" instance=ExtResource("14_emma_model")]
+
+[node name="Interactable" type="Area3D" parent="EmmaNPC"]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("4_interactable_script")
+prompt_message = "[E] はなす"
+prompt_offset = Vector3(0, 1.8, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EmmaNPC/Interactable"]
+shape = SubResource("CylinderShape3D_interact")
+
+[node name="DoorExit" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 3.5)
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("7_teleport_script")
+target_scene_path = "res://scenes/maps/village.tscn"
+prompt_text = "[E] 村へ出る"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DoorExit"]
+shape = SubResource("BoxShape3D_door")
+
+[node name="Player" parent="." instance=ExtResource("1_player_scene")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.0)
+
+[node name="DialogueBox" parent="." instance=ExtResource("5_dialogue_scene")]
+
+[node name="QuestHUD" parent="." instance=ExtResource("6_hud_scene")]

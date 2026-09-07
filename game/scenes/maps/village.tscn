@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 ]
+[gd_scene load_steps=22 format=3 ]
 
 [ext_resource type="PackedScene"  path="res://scenes/characters/player.tscn" id="1_player_scene"]
 [ext_resource type="Script" path="res://scripts/system/diorama_camera.gd" id="2_camera_script"]
@@ -48,6 +48,9 @@ size = Vector3(6, 4, 5)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_exit"]
 size = Vector3(6, 2, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_atelier_door"]
+size = Vector3(3.5, 2, 2)
 
 [node name="Village" type="Node3D"]
 
@@ -158,6 +161,17 @@ prompt_text = "[E] ささやきの森へ行く"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ForestExit"]
 shape = SubResource("BoxShape3D_exit")
+
+[node name="AtelierEntrance" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1, -5.2)
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("6_teleport_script")
+target_scene_path = "res://scenes/maps/atelier.tscn"
+prompt_text = "[E] 人形工房に入る"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AtelierEntrance"]
+shape = SubResource("BoxShape3D_atelier_door")
 
 [node name="Player" parent="." instance=ExtResource("1_player_scene")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
