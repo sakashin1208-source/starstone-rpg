@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b5m7x9k2v1r4p"]
+[gd_scene load_steps=8 format=3 uid="uid://b5m7yak2v1r4p"]
 
 [ext_resource type="Script" path="res://scripts/ui/title_screen.gd" id="1_title_script"]
 
@@ -19,19 +19,6 @@ ambient_light_color = Color(0.9, 0.82, 0.75, 1)
 ambient_light_energy = 0.8
 tonemap_mode = 2
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn"]
-bg_color = Color(0.18, 0.14, 0.11, 0.92)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.82, 0.7, 0.48, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-shadow_size = 4
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_hover"]
 bg_color = Color(0.3, 0.24, 0.18, 1)
 border_width_left = 2
@@ -44,6 +31,19 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 shadow_size = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn"]
+bg_color = Color(0.18, 0.14, 0.11, 0.92)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.82, 0.7, 0.48, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_size = 4
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_disabled"]
 bg_color = Color(0.12, 0.1, 0.08, 0.5)
@@ -137,23 +137,23 @@ theme_override_constants/separation = 14
 [node name="NewGameBtn" type="Button" parent="CenterContainer/VBoxContainer/ButtonsContainer"]
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
 text = "▶ はじめから"
 
 [node name="ContinueBtn" type="Button" parent="CenterContainer/VBoxContainer/ButtonsContainer"]
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
-theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_btn_disabled")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
 text = "📖 つづきから"
 
 [node name="QuitBtn" type="Button" parent="CenterContainer/VBoxContainer/ButtonsContainer"]
 custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
 text = "✕ おわる"
 
 [connection signal="pressed" from="CenterContainer/VBoxContainer/ButtonsContainer/NewGameBtn" to="." method="on_new_game_pressed"]

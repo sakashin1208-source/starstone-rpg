@@ -1,6 +1,10 @@
 ; Engine configuration file.
 ; It's best edited using the editor UI and not directly,
-; but since it is a text-based format, you can also edit it.
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
 
 config_version=5
 
@@ -55,6 +59,5 @@ interact={
 
 [rendering]
 
-renderer/rendering_method="forward_plus"
-anti_aliasing/quality/msaa_3d=2
 textures/vram_compression/import_etc2_astc=true
+anti_aliasing/quality/msaa_3d=2
