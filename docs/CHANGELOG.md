@@ -24,3 +24,12 @@
 - 宝箱ギミック (`treasure_chest.tscn`) 実装（開錠アニメーション、星石のかけら入手、クエスト進捗連動）
 - 長老NPCのクエスト進行連動ダイアログ分岐（未受注 → 探索中 → 報告達成 → 完了後）実装
 - 全スクリプト（11本）および全シーン（村・森・戦闘）のCLI検証完了 (Exit Code 0)
+
+## [0.4.0-vertical-slice] - 2026-09-07
+- Phase 4 Persistence実装完了により、**「約10分のVertical Slice」ゲーム全体ループが成立**
+- インベントリ管理サービス (`inventory_service.gd`) 実装（やくそう、星石のかけら、Gold、EXP）
+- セーブ＆ロードサービス (`save_service.gd`) 実装（`user://savegame.json` への永続化、座標・クエスト状態・所持品の完全復元）
+- プレイヤーのクイックセーブ機能（[F5] / [C]キー）およびロード時座標復元処理を統合
+- タイトル画面 (`title_screen.tscn`, `title_screen.gd`) 実装（はじめから／つづきから／おわる）
+- セーブ＆ロード完全復元自動テスト (`test_save_load.gd`) を構築し、CLI検証で合格（Exit Code 0, 0 errors）を確認
+- 全14本のスクリプトおよび全シーンのCLI構文・実行テストを完全通過

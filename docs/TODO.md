@@ -25,8 +25,15 @@
 - [x] STEP 15: Return to Village & Quest Completion (Elder dialogue branching & complete loop)
 - [x] Phase 3 Checkpoint & Hard Stop Report
 
-## PHASE 4: Persistence (Next)
-- [ ] STEP 16: Inventory & Item Management
-- [ ] STEP 17: Save & Load System (`SaveService`)
-- [ ] STEP 18: Title Screen & State Restoration
-- [ ] Phase 4 Checkpoint & Hard Stop Report
+## PHASE 4: Persistence [DONE]
+- [x] STEP 16: Inventory & Item Management (`inventory_service.gd`)
+- [x] STEP 17: Save & Load System (`save_service.gd` - `user://savegame.json`, Quick save F5/C)
+- [x] STEP 18: Title Screen & State Restoration (`title_screen.tscn`, `title_screen.gd`)
+- [x] E2E Save/Load Persistence Automated Test (`test_save_load.gd` - PASSED with 0 errors)
+- [x] Phase 4 Checkpoint & Hard Stop Report
+
+## PHASE 5: Vertical Slice QA & Polish (Next)
+- [ ] End-to-End Playable Loop Confirmation (GUI Run)
+- [ ] Blender Python Pipeline Integration (Procedural 3D Asset generation)
+- [ ] Figma UI Specifications & Design Token Mapping
+- [ ] HyperFrames Promotion Video Pipeline
