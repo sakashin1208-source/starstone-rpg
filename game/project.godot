@@ -9,8 +9,14 @@ config_version=5
 config/name="Starstone Hero 3D"
 config/description="Doll x Diorama 3D RPG"
 config/version="0.1.0"
-run/main_scene="res://scenes/maps/village.tscn"
+run/main_scene="res://scenes/ui/title_screen.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
+
+[autoload]
+
+QuestManager="*res://scripts/quest/quest_manager.gd"
+InventoryService="*res://scripts/inventory/inventory_service.gd"
+SaveService="*res://scripts/save/save_service.gd"
 
 [display]
 
@@ -52,7 +58,3 @@ interact={
 renderer/rendering_method="forward_plus"
 anti_aliasing/quality/msaa_3d=2
 textures/vram_compression/import_etc2_astc=true
-
-[autoload]
-
-QuestManager="*res://scripts/quest/quest_manager.gd"
