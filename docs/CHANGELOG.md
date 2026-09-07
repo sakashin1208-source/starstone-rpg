@@ -33,3 +33,23 @@
 - タイトル画面 (`title_screen.tscn`, `title_screen.gd`) 実装（はじめから／つづきから／おわる）
 - セーブ＆ロード完全復元自動テスト (`test_save_load.gd`) を構築し、CLI検証で合格（Exit Code 0, 0 errors）を確認
 - 全14本のスクリプトおよび全シーンのCLI構文・実行テストを完全通過
+
+## [0.5.0-3d-asset-production] - 2026-09-07
+- Blender 4.2 Python 自動化パイプラインによる **Doll × Diorama 3Dアセット12種類の量産完了**
+- プロップ量産 (`generate_props.py`):
+  - `diorama_tree` (2段リーフのジオラマ樹木)
+  - `diorama_rock` (角丸の苔むした岩)
+  - `wooden_fence` (木製横木柵)
+  - `village_lantern` (真鍮×すりガラスの街灯)
+  - `ancient_shrine` (古代石造りの階段台座・二本柱祠)
+  - `starstone_chest` (真鍮帯金付き木製宝箱)
+- 建物量産 (`generate_buildings.py`):
+  - `doll_house_elder` (長老宅: 赤屋根・レンガ煙突・木製ドア・窓)
+  - `doll_house_shop` (武器屋: 青屋根・板張り壁・庇・吊り看板)
+  - `doll_house_inn` (宿屋: 緑屋根・石造り基部・木製テラス)
+- キャラクター量産 (`generate_characters.py`):
+  - `doll_slime` (半透明エメラルドグリーン・ハイライトアイ)
+  - `doll_hero_leon` (5〜6頭身ドール調素体・マント・ベルト・ブーツ)
+- 原本 `.blend` はすべて `blender/` 配下に保管、実行用 `.glb` は `game/assets/models/` にエクスポート
+- 村シーン (`village.tscn`)、森シーン (`forest.tscn`)、プレイヤー (`player.tscn`)、スライム (`slime.tscn`)、宝箱 (`treasure_chest.tscn`) のプレースホルダーをすべて高品質本番モデルへ差し替え完了
+- 全シーンおよびセーブ＆ロードテストのCLI自動検証を完全通過 (Exit Code 0)
